@@ -67,9 +67,7 @@ function handleContainerShapeSizing(e) {
   requestAnimationFrame(() => {
     dimensionIndicator.innerHTML = `${width}, ${height}`;
     shapeHandlers.style.transform = `translate(${
-      e.pageX - startX < 0
-        ? e.pageX - window.pageXOffset
-        : startX - window.pageYOffset
+      e.pageX - startX < 0 ? e.pageX : startX
     }px, ${
       e.pageY - startY < 0
         ? e.pageY - window.pageYOffset
@@ -115,7 +113,7 @@ function createRectangle() {
     container.style.width = `${shapeHandlers.style.width}`;
     container.style.height = `${shapeHandlers.style.height}`;
     container.style.top = `${+y + window.pageYOffset}px`;
-    container.style.left = `${+x + window.pageXOffset}px`;
+    container.style.left = `${x}px`;
     shapeHandlers.style.height = "";
     shapeHandlers.style.width = "";
     shapeHandlers.style.transform = "";
