@@ -24,20 +24,24 @@ function handleMouseoutContainer(e) {
 }
 
 function handleContainerCreation(e) {
-  console.log(e, window);
-  console.log("handleContainerCreation", e);
+  console.log("handleContainerCreation", e, window);
   dimensionIndicator.style.opacity = 1;
   shapeHandlers.style.opacity = 1;
   startX = e.pageX;
   startY = e.pageY;
 
   dimensionIndicator.style.transform = `translate(${startX}px, ${startY -
-    25}px)`;
+    25 -
+    window.pageYOffset}px)`;
   shapeHandlers.style.transform = `translate(${startX}px, ${startY -
     window.pageYOffset}px)`;
   canvas.style.cursor = "crosshair";
 
-  canvas.addEventListener("mousemove", handleContainerShapeSizing, false);
+  document.body.addEventListener(
+    "mousemove",
+    handleContainerShapeSizing,
+    false
+  );
 
   document.body.addEventListener("mouseup", handleContainerOnMouseUp, false);
   // TODO: revisit this implementation
@@ -63,15 +67,25 @@ function handleContainerShapeSizing(e) {
   requestAnimationFrame(() => {
     dimensionIndicator.innerHTML = `${width}, ${height}`;
     shapeHandlers.style.transform = `translate(${
-      e.pageX - startX < 0 ? e.pageX : startX
-    }px, ${e.pageY - startY < 0 ? e.pageY : startY - window.pageYOffset}px)`;
+      e.pageX - startX < 0
+        ? e.pageX - window.pageXOffset
+        : startX - window.pageYOffset
+    }px, ${
+      e.pageY - startY < 0
+        ? e.pageY - window.pageYOffset
+        : startY - window.pageYOffset
+    }px)`;
     shapeHandlers.style.width = `${width}px`;
     shapeHandlers.style.height = `${height}px`;
   });
 }
 
 function handleContainerOnMouseUp(e) {
-  canvas.removeEventListener("mousemove", handleContainerShapeSizing, false);
+  document.body.removeEventListener(
+    "mousemove",
+    handleContainerShapeSizing,
+    false
+  );
   document.body.removeEventListener("mouseup", handleContainerOnMouseUp, false);
   canvas.style.cursor = "default";
   createRectangle();
@@ -100,8 +114,8 @@ function createRectangle() {
     container.style.position = "absolute";
     container.style.width = `${shapeHandlers.style.width}`;
     container.style.height = `${shapeHandlers.style.height}`;
-    container.style.top = `${y}px`;
-    container.style.left = `${x}px`;
+    container.style.top = `${+y + window.pageYOffset}px`;
+    container.style.left = `${+x + window.pageXOffset}px`;
     shapeHandlers.style.height = "";
     shapeHandlers.style.width = "";
     shapeHandlers.style.transform = "";
