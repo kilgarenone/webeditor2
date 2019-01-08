@@ -11,9 +11,23 @@ class App extends Component {
   render() {
     return (
       <>
+        <header className="header">
+          <div className="tool">
+            <svg width="24" height="24" viewBox="0 0 50 50">
+              <path d="M14.8 5a.9.9 0 0 0-.2 0l-.1.1-.2.2-.2.2v.2l-.1.1V39a1 1 0 0 0 1.7.7l7.2-6.8 5.9 13.5a1 1 0 0 0 1.3.5l4.4-2c.5-.2.7-.8.5-1.3l-6-13.3 10-.9c.5 0 .8-.3 1-.7a1 1 0 0 0-.3-1L15.8 5.4l-.1-.1-.1-.1-.1-.1h-.2l-.1-.1H15 15h-.1-.1zM16 8.3l20.7 19.3-9.4.8a1 1 0 0 0-.8.5 1 1 0 0 0 0 1l6.3 13.6-2.6 1.2-6-13.9a1 1 0 0 0-1.6-.3L16 36.7z" />
+            </svg>
+            <label>Select</label>
+          </div>
+          <div className="tool">
+            <svg width="24" height="24" viewBox="0 0 16 16">
+              <path d="M1.5 2c-.3 0-.5.2-.5.5v10c0 .3.2.5.5.5h13c.3 0 .5-.2.5-.5v-10c0-.3-.2-.5-.5-.5zM2 3h12v9H2z" />
+            </svg>
+            <label>Container</label>
+          </div>
+        </header>
         <div id="canvas" />
-        <div class="dimension-indicator" />
-        <div class="shape-handlers" />
+        <div className="dimension-indicator" />
+        <div className="shape-handlers" />
       </>
     );
   }

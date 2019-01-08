@@ -11,11 +11,20 @@ export default function prepareContainerCreationProcess() {
     "dimension-indicator"
   )[0];
   shapeHandlers = document.getElementsByClassName("shape-handlers")[0];
-  document.body.addEventListener("mousedown", handleContainerCreation, false);
-  // document.body.addEventListener("click", handleTextCreation, false);
+  canvas.addEventListener("mousedown", handleContainerCreation, false);
+
+  // canvas.addEventListener("click", handleTextCreation, false);
+}
+
+function handleMouseoverContainer(e) {
+  e.target.classList.add("hovered");
+}
+function handleMouseoutContainer(e) {
+  e.target.classList.remove("hovered");
 }
 
 function handleContainerCreation(e) {
+  console.log(e, window);
   console.log("handleContainerCreation", e);
   dimensionIndicator.style.opacity = 1;
   shapeHandlers.style.opacity = 1;
@@ -24,14 +33,11 @@ function handleContainerCreation(e) {
 
   dimensionIndicator.style.transform = `translate(${startX}px, ${startY -
     25}px)`;
-  shapeHandlers.style.transform = `translate(${startX}px, ${startY}px)`;
-  document.body.style.cursor = "crosshair";
+  shapeHandlers.style.transform = `translate(${startX}px, ${startY -
+    window.pageYOffset}px)`;
+  canvas.style.cursor = "crosshair";
 
-  document.body.addEventListener(
-    "mousemove",
-    handleContainerShapeSizing,
-    false
-  );
+  canvas.addEventListener("mousemove", handleContainerShapeSizing, false);
 
   document.body.addEventListener("mouseup", handleContainerOnMouseUp, false);
   // TODO: revisit this implementation
@@ -58,28 +64,38 @@ function handleContainerShapeSizing(e) {
     dimensionIndicator.innerHTML = `${width}, ${height}`;
     shapeHandlers.style.transform = `translate(${
       e.pageX - startX < 0 ? e.pageX : startX
-    }px, ${e.pageY - startY < 0 ? e.pageY : startY}px)`;
+    }px, ${e.pageY - startY < 0 ? e.pageY : startY - window.pageYOffset}px)`;
     shapeHandlers.style.width = `${width}px`;
     shapeHandlers.style.height = `${height}px`;
   });
 }
 
 function handleContainerOnMouseUp(e) {
-  document.body.removeEventListener(
-    "mousemove",
-    handleContainerShapeSizing,
-    false
-  );
+  canvas.removeEventListener("mousemove", handleContainerShapeSizing, false);
   document.body.removeEventListener("mouseup", handleContainerOnMouseUp, false);
-  document.body.style.cursor = "default";
+  canvas.style.cursor = "default";
   createRectangle();
   dimensionIndicator.style.opacity = 0;
+}
+
+function handleClickContainer(e) {
+  e.stopPropagation();
+  shapeHandlers.style.transform = `translate(${e.target.style.left}px ${
+    e.target.style.top
+  }px)`;
+  shapeHandlers.style.width = `${e.target.style.width}px`;
+  shapeHandlers.style.width = `${e.target.style.height}px`;
+  shapeHandlers.style.opacity = 1;
 }
 
 function createRectangle() {
   const [x, y] = getXYFromTransform(shapeHandlers);
   container = document.createElement("div");
   container.className = "container";
+  container.addEventListener("mouseover", handleMouseoverContainer, false);
+  container.addEventListener("mouseout", handleMouseoutContainer, false);
+  container.addEventListener("click", handleClickContainer, false);
+
   requestAnimationFrame(() => {
     container.style.position = "absolute";
     container.style.width = `${shapeHandlers.style.width}`;
