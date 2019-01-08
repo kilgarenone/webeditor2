@@ -13,6 +13,7 @@ class App extends Component {
       <>
         <div id="canvas" />
         <div class="dimension-indicator" />
+        <div class="shape-handlers" />
       </>
     );
   }

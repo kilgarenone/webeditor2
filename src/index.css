@@ -3,8 +3,15 @@
   height: 100vh;
 }
 
-.rectangle {
-  border: 1px solid purple;
+.shape-handlers {
+  position: fixed;
+  top: 0;
+  opacity: 0;
+  border: 2px solid purple;
+}
+
+.container {
+  background-color: #d3d3d3;
 }
 
 .dimension-indicator {
