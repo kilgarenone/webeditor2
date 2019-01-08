@@ -9,7 +9,77 @@
   top: 0;
   opacity: 0;
   border: 2px solid purple;
+  display: flex;
+  justify-content: space-between;
 }
+
+.handlers {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.handler--top-left {
+  position: relative;
+  left: -5px;
+  top: -5px;
+}
+.handler--left {
+  position: relative;
+  left: -5px;
+  /* top: -5px; */
+}
+.handler--bottom-left {
+  position: relative;
+  bottom: -5px;
+  left: -5px;
+}
+.handler--top {
+  position: relative;
+  top: -5px;
+}
+.handler--bottom {
+  position: relative;
+  bottom: -5px;
+}
+.handler--top-right {
+  position: relative;
+  top: -5px;
+  right: -5px;
+}
+.handler--right {
+  position: relative;
+  right: -5px;
+}
+.handler--bottom-right {
+  position: relative;
+  right: -5px;
+  bottom: -5px;
+}
+
+.handler {
+  width: 10px;
+  height: 10px;
+  border: 1px solid blue;
+  background-color: white;
+}
+
+/* .handler--top-left {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+} */
+
+/* .top {
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  right: 50%;
+  width: 10px;
+  height: 10px;
+  border: 1px solid blue;
+  background-color: white;
+} */
 
 .container {
   background-color: #d3d3d3;
