@@ -4,15 +4,20 @@ let startX = 0;
 let startY = 0;
 let dimensionIndicator;
 let shapeHandlers;
+let handleClickSelectTool;
 
-export default function prepareContainerCreationProcess() {
+export default function prepareContainerCreationProcess(clickSelectTool) {
+  handleClickSelectTool = clickSelectTool;
   canvas = document.getElementById("canvas");
   dimensionIndicator = document.getElementsByClassName(
     "dimension-indicator"
   )[0];
   shapeHandlers = document.getElementsByClassName("shape-handlers")[0];
-  canvas.addEventListener("mousedown", handleContainerCreation, false);
 
+  return {
+    canvas: { element: canvas, mousedown: handleContainerCreation },
+    container: { element: canvas, click: handleClickContainer }
+  };
   // canvas.addEventListener("click", handleTextCreation, false);
 }
 
@@ -44,23 +49,9 @@ function handleContainerCreation(e) {
   );
 
   document.body.addEventListener("mouseup", handleContainerOnMouseUp, false);
-  // TODO: revisit this implementation
-  // reallyCreateContainerTimeout = setTimeout(
-  //   () => initContainerCreationProcess.call(null, e),
-  //   200
-  // );
 }
 
 function handleContainerShapeSizing(e) {
-  // if cursor is still moving inside the start point region,
-  // don't create the container yet
-  // if (Math.abs(e.pageX - snapX) <= 10 || Math.abs(e.pageY - snapY) <= 10) {
-  //   return;
-  // }
-  // if (!isAppended) {
-  //   parent.appendChild(container);
-  //   isAppended = true;
-  // }
   const width = Math.abs(e.pageX - startX);
   const height = Math.abs(e.pageY - startY);
 
@@ -87,17 +78,22 @@ function handleContainerOnMouseUp(e) {
   document.body.removeEventListener("mouseup", handleContainerOnMouseUp, false);
   canvas.style.cursor = "default";
   createRectangle();
+  handleClickSelectTool();
   dimensionIndicator.style.opacity = 0;
 }
 
 function handleClickContainer(e) {
-  e.stopPropagation();
-  shapeHandlers.style.transform = `translate(${e.target.style.left}px ${
+  if (!e.target.classList.contains("container")) {
+    return;
+  }
+  console.log("clicking on a container", e, shapeHandlers);
+  shapeHandlers.style.transform = `translate(${e.target.style.left}, ${
     e.target.style.top
-  }px)`;
-  shapeHandlers.style.width = `${e.target.style.width}px`;
-  shapeHandlers.style.width = `${e.target.style.height}px`;
+  })`;
+  shapeHandlers.style.width = `${e.target.style.width}`;
+  shapeHandlers.style.height = `${e.target.style.height}`;
   shapeHandlers.style.opacity = 1;
+  shapeHandlers.classList.remove("hide-handlers");
 }
 
 function createRectangle() {
@@ -106,7 +102,6 @@ function createRectangle() {
   container.className = "container";
   container.addEventListener("mouseover", handleMouseoverContainer, false);
   container.addEventListener("mouseout", handleMouseoutContainer, false);
-  container.addEventListener("click", handleClickContainer, false);
 
   requestAnimationFrame(() => {
     container.style.position = "absolute";

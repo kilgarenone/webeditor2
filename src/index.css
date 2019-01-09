@@ -11,10 +11,15 @@
   border: 2px solid purple;
 }
 
+.hide-handlers > div {
+  pointer-events: none;
+  opacity: 0;
+}
+
 .handler--top {
   position: absolute;
   height: 10px;
-  top: -5px;
+  top: -6px;
   left: 0;
   right: 0;
   cursor: ns-resize;
@@ -24,13 +29,13 @@
   width: 10px;
   top: 0;
   bottom: 0;
-  right: -5px;
+  right: -6px;
   cursor: ew-resize;
 }
 .handler--bottom {
   position: absolute;
   height: 10px;
-  bottom: -5px;
+  bottom: -6px;
   left: 0;
   right: 0;
   cursor: ns-resize;
@@ -41,7 +46,7 @@
   width: 10px;
   top: 0;
   bottom: 0;
-  left: -5px;
+  left: -6px;
   cursor: ew-resize;
 }
 .handler-box {
@@ -53,27 +58,31 @@
 }
 .handler--top-left {
   position: absolute;
-  left: -5px;
-  top: -5px;
+  left: -6px;
+  top: -6px;
   cursor: nwse-resize;
 }
 .handler--top-right {
   position: absolute;
-  right: -5px;
-  top: -5px;
+  right: -6px;
+  top: -6px;
   cursor: nesw-resize;
 }
 .handler--bottom-right {
   position: absolute;
-  right: -5px;
-  bottom: -5px;
+  right: -6px;
+  bottom: -6px;
   cursor: nwse-resize;
 }
 .handler--bottom-left {
   position: absolute;
-  left: -5px;
-  bottom: -5px;
+  left: -6px;
+  bottom: -6px;
   cursor: nesw-resize;
+}
+
+.tool-isActive {
+  background-color: #eeeeee;
 }
 
 .container {
@@ -98,18 +107,19 @@
   left: 0;
   right: 0;
   z-index: 1;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   height: 70px;
   background-color: #fbfbfb;
 }
 
 .tool {
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .tool:not(:last-child) {
-  margin-right: 1.5rem;
+  margin-right: 1rem;
 }
 
 *,
