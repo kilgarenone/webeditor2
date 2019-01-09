@@ -1,4 +1,6 @@
 let topCache;
+let widthCache;
+let leftCache;
 let heightCache;
 
 class Resizer {
@@ -55,11 +57,34 @@ class Resizer {
     this.element.style.height = `${topCache + heightCache - e.pageY}px`;
     this.handlersBox.style.height = `${topCache + heightCache - e.pageY}px`;
   };
+
   handleTopMouseUp = () => {
+    this.element.classList.remove("dragging-handler");
     document.body.removeEventListener("mousemove", this.handleTopMouseMove);
     document.body.removeEventListener("mouseup", this.handleTopMouseUp);
   };
-  handleRightMouseDown = () => {};
+
+  handleRightMouseDown = () => {
+    document.body.addEventListener("mouseup", this.handleRightMouseUp);
+    document.body.addEventListener("mousemove", this.handleRightMouseMove);
+    // topCache = parseInt(this.element.style.top, 10);
+    // heightCache = parseInt(this.element.style.height, 10);
+    widthCache = parseInt(this.element.style.width, 10);
+    leftCache = parseInt(this.element.style.left, 10);
+    this.element.classList.add("dragging-handler");
+  };
+
+  handleRightMouseMove = e => {
+    this.element.style.width = `${e.pageX - leftCache}px`;
+    this.handlersBox.style.width = `${e.pageX - leftCache}px`;
+  };
+
+  handleRightMouseUp = () => {
+    this.element.classList.remove("dragging-handler");
+    document.body.removeEventListener("mousemove", this.handleRightMouseMove);
+    document.body.removeEventListener("mouseup", this.handleRightMouseUp);
+  };
+
   handleBottomMouseDown = () => {};
   handleLeftMouseDown = () => {};
   handleTopLeftMouseDown = () => {};
