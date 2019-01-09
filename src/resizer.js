@@ -3,12 +3,14 @@ let heightCache;
 
 class Resizer {
   element = null;
+  handlersBox = null;
 
   target(element) {
     this.element = element;
   }
 
   init(handlers) {
+    this.handlersBox = handlers;
     handlers.addEventListener("mousedown", this.handleMouseDown);
   }
 
@@ -44,10 +46,14 @@ class Resizer {
 
   handleTopMouseMove = e => {
     // const height = parseInt(this.element.style.top, 10);
+    this.handlersBox.style.transform = `translate(${this.element.style.left}, ${
+      e.pageY - topCache < 0
+        ? e.pageY - window.pageYOffset
+        : e.pageY - window.pageYOffset
+    }px)`;
     this.element.style.top = `${e.pageY}px`;
     this.element.style.height = `${topCache + heightCache - e.pageY}px`;
-
-    // console.log(top);
+    this.handlersBox.style.height = `${topCache + heightCache - e.pageY}px`;
   };
   handleTopMouseUp = () => {
     document.body.removeEventListener("mousemove", this.handleTopMouseMove);
