@@ -50,6 +50,9 @@ class App extends Component {
           </div>
         </header>
         <div id="canvas" />
+        <aside id="sidebar">
+          <div>Bunch of properties controllers here</div>
+        </aside>
         <div className="dimension-indicator" />
         <div className="shape-handlers hide-handlers">
           <div className="handler--top" />

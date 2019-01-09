@@ -2,6 +2,17 @@
   user-select: none;
   height: 100vh;
   margin-top: 70px;
+  margin-right: 200px;
+}
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  background-color: grey;
+  margin-top: 70px;
 }
 
 .shape-handlers {
