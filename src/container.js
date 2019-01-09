@@ -1,3 +1,5 @@
+import Resizer from "./resizer";
+
 let canvas;
 let container;
 let startX = 0;
@@ -5,6 +7,7 @@ let startY = 0;
 let dimensionIndicator;
 let shapeHandlers;
 let handleClickSelectTool;
+let resizer;
 
 export default function prepareContainerCreationProcess(clickSelectTool) {
   handleClickSelectTool = clickSelectTool;
@@ -12,7 +15,10 @@ export default function prepareContainerCreationProcess(clickSelectTool) {
   dimensionIndicator = document.getElementsByClassName(
     "dimension-indicator"
   )[0];
+
   shapeHandlers = document.getElementsByClassName("shape-handlers")[0];
+  resizer = new Resizer();
+  resizer.init(shapeHandlers);
 
   return {
     canvas: { element: canvas, mousedown: handleContainerCreation },
@@ -86,7 +92,6 @@ function handleClickContainer(e) {
   if (!e.target.classList.contains("container")) {
     return;
   }
-  console.log("clicking on a container", e, shapeHandlers);
   shapeHandlers.style.transform = `translate(${e.target.style.left}, ${
     e.target.style.top
   })`;
@@ -94,14 +99,15 @@ function handleClickContainer(e) {
   shapeHandlers.style.height = `${e.target.style.height}`;
   shapeHandlers.style.opacity = 1;
   shapeHandlers.classList.remove("hide-handlers");
+  resizer.target(e.target);
 }
 
 function createRectangle() {
   const [x, y] = getXYFromTransform(shapeHandlers);
   container = document.createElement("div");
   container.className = "container";
-  container.addEventListener("mouseover", handleMouseoverContainer, false);
-  container.addEventListener("mouseout", handleMouseoutContainer, false);
+  container.addEventListener("mouseover", handleMouseoverContainer);
+  container.addEventListener("mouseout", handleMouseoutContainer);
 
   requestAnimationFrame(() => {
     container.style.position = "absolute";
