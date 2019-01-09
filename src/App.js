@@ -28,20 +28,14 @@ class App extends Component {
         <div id="canvas" />
         <div className="dimension-indicator" />
         <div className="shape-handlers">
-          <div className="handlers">
-            <div className="handler handler--top-left" />
-            <div className="handler handler--left" />
-            <div className="handler handler--bottom-left" />
-          </div>
-          <div className="handlers">
-            <div className="handler handler--top" />
-            <div className="handler handler--bottom" />
-          </div>
-          <div className="handlers">
-            <div className="handler handler--top-right" />
-            <div className="handler handler--right" />
-            <div className="handler handler--bottom-right" />
-          </div>
+          <div className="handler--top" />
+          <div className="handler--right" />
+          <div className="handler--bottom" />
+          <div className="handler--left" />
+          <div className="handler-box handler--top-left" />
+          <div className="handler-box handler--top-right" />
+          <div className="handler-box handler--bottom-right" />
+          <div className="handler-box handler--bottom-left" />
         </div>
       </>
     );
